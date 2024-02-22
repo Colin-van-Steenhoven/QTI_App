@@ -88,6 +88,24 @@ var gingerbread = new ProductenWindow();
   klik in je XAML code op edit/advanced/format document om een nette XAML layout te krijgen.
   #
 
+  **Variabele namen in XAML**
+  
+  Variabele namen schrijf je door te beginnen met een passende naam voor de functie gevolgt door de type die je gebruikt. 
+
+  *Voorbeeld van een goede manier om dit te doen:*
+   ```XML
+            <Button HorizontalAlignment="Left"
+                x:Name="redirectBackB"
+                Click="redirectBackB_Click" />
+  ```
+  *Voorbeeld van een foute manier om dit te doen:*
+   ```XML
+            <Button HorizontalAlignment="Left"
+                x:Name="BRedirectBack"
+                Click="BRedirectBack_Click" />
+  ```
+  #
+
  **Commentaar en Tekst**
   
   Schrijf commentaren in het Nederlands.
