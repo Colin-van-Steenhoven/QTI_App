@@ -1,4 +1,3 @@
-using E4_The_Big_Three.Data;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -17,26 +16,16 @@ using Windows.Foundation.Collections;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace QTI_App
+namespace QTI_App.Pages
 {
     /// <summary>
-    /// An empty window that can be used on its own or navigated to within a Frame.
+    /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainWindow : Window
+    public sealed partial class HomePage : Page
     {
-        public MainWindow()
+        public HomePage()
         {
             this.InitializeComponent();
-            using (var db = new AppDbContext())
-            {
-                db.Database.EnsureDeleted();
-                db.Database.EnsureCreated();
-            }
-        }
-
-        private void myButton_Click(object sender, RoutedEventArgs e)
-        {
-            myButton.Content = "Clicked";
         }
     }
 }
