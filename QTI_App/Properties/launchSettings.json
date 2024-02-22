@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "QTI_App (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "QTI_App (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
