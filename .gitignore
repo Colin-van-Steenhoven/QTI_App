@@ -399,4 +399,4 @@ FodyWeavers.xsd
 
 
 # Ignore App.config
-*.App.config
+*.config
