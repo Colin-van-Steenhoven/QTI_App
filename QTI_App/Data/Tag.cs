@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace E4_The_Big_Three.Data
 {
-    class Tag
+    public class Tag
     {
+        public int Id { get; set; }
+        public string Name { get; set; }
+
+        public List<QuestionTag> QuestionTags { get; set; } = new List<QuestionTag>();
     }
 }
