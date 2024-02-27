@@ -26,6 +26,7 @@ namespace QTI_App
     /// </summary>
     public sealed partial class MainWindow : Window
     {
+        //dit moet bovenaan iedere page staan
         private NavigationService _navigationService;
         public MainWindow()
         {
