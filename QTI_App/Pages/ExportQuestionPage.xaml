@@ -45,19 +45,13 @@
                                 </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
-                        
-                        <ListBox.ItemContainerStyle>
-                            <Style TargetType="ListBoxItem">
-                                <Style.Setters>
-                                    <Setter Property="Background"
-                                            Value="LightBlue" />
-                                    <Setter Property="Foreground"
-                                            Value="Black" />
-                                </Style.Setters>
-                            </Style>
-                        </ListBox.ItemContainerStyle>
                     </ListBox>
                 </Grid>
+
+                <Button Content="Genereer"
+                        Margin="10"
+                        x:Name="generateQTIB"
+                        Click="generateQTIB_Click" />
             </Grid>
         </Grid>
     </Grid>
