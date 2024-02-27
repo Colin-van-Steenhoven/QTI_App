@@ -1,3 +1,4 @@
+using E4_The_Big_Three.Data;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -26,6 +27,20 @@ namespace QTI_App.Pages
         public HomePage()
         {
             this.InitializeComponent();
+
+            using var db = new AppDbContext();
+            var questions = db.questions.ToList();
+            questionsLv.ItemsSource = questions;
+        }
+
+        private void questionsLv_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        {
+
+        }
+
+        private void addNewQuestionB_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
