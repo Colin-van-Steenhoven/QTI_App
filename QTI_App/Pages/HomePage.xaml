@@ -30,6 +30,12 @@
                         HorizontalAlignment="Right"
                         x:Name="addNewQuestionB"
                         Click="addNewQuestionB_Click"/>
+
+                <Button Content="Vraag exporteren"
+                        Foreground="Black"
+                        HorizontalAlignment="Center"
+                        x:Name="exportQuestionB"
+                        Click="exportQuestionB_Click" />
             </Grid>
 
 

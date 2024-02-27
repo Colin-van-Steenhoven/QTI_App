@@ -42,5 +42,10 @@ namespace QTI_App.Pages
         {
 
         }
+
+        private void exportQuestionB_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(ExportQuestionPage));
+        }
     }
 }
