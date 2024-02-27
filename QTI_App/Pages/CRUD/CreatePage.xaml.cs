@@ -6,8 +6,6 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
-using QTI_App.Controllers;
-using QTI_App.Pages;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,25 +20,40 @@ using Windows.Foundation.Collections;
 namespace QTI_App
 {
     /// <summary>
-    /// An empty window that can be used on its own or navigated to within a Frame.
+    /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainWindow : Window
+    public sealed partial class CreatePage : Page
     {
-        private NavigationService _navigationService;
-        public MainWindow()
+
+        private List<Question> questions;
+
+        public CreatePage()
         {
             this.InitializeComponent();
-            using (var db = new AppDbContext())
-            {
-                db.Database.EnsureDeleted();
-                db.Database.EnsureCreated();
-            }
-            InitializeNavigationService(ContentFrame);
-            _navigationService.NavigateTo<CreatePage>();
         }
-        private void InitializeNavigationService(Frame frame)
+
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            _navigationService = new NavigationService(frame);
+
+            using var db = new AppDbContext();
+
+            using (var dbContext = new AppDbContext())
+            {
+                var text = QuestionTextBox.Text;
+
+                db.questions.Add(new Question 
+                {
+                    Text = text 
+                });
+
+
+
+               db.SaveChanges();
+
+                /*questions = dbContext.questions.ToList();
+                QuestionTextBox.ItemsSource = questions;*/
+            }
+
         }
     }
 }
