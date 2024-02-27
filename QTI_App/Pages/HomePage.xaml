@@ -18,8 +18,12 @@
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0"
-                  Background="Lavender"
+                  Background="AliceBlue"
                   Padding="10">
+
+                <Image Width="50"
+                       Source="/Assets/Logo.png"
+                       HorizontalAlignment="Left"/>
 
                 <Button Content="Vraag toevoegen"
                         Foreground="Black"
