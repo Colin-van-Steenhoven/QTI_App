@@ -15,6 +15,8 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using E4_The_Big_Three.Data;
 using System.Xml.Linq;
+using System.IO.Compression;
+using System.Text;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -37,48 +39,71 @@ namespace QTI_App.Pages
 
         private void generateQTIB_Click(object sender, RoutedEventArgs e)
         {
-            // Check if any item is selected
+            // Controleer of een item is geselecteerd.
             if (selectQuestionsLB.SelectedItems.Count > 0)
             {
-                // Initialize an XML document
-                XDocument qtiDocument = new XDocument(
+                // Initialiseer een XML-document voor beoordelingsitems.
+                XDocument xmlDocument = new XDocument(
                     new XDeclaration("1.0", "utf-8", "yes"),
                     new XElement("assessmentItems")
                 );
 
-                // Iterate over selected items
+                // Initialiseer een stringbuilder voor de inhoud van Imsmanifest.xml.
+                StringBuilder manifestContent = new StringBuilder("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+                manifestContent.Append("<manifest identifier=\"MANIFEST_001\" version=\"1.0\">\n");
+                manifestContent.Append("<resources>\n");
+
+                // Itereer over geselecteerde items.
                 foreach (var item in selectQuestionsLB.SelectedItems)
                 {
-                    // Assuming 'item' is of a custom type 'Question' that has 'Id' and 'Text' properties
+                    // Ervan uitgaande dat 'item' een aangepast type 'Vraag' is met eigenschappen 'Id' en 'Tekst'.
                     Question question = item as Question;
                     if (question != null)
                     {
-                        // Create an 'assessmentItem' element for each question
+                        // Maak voor elke vraag een 'assessmentItem'-element aan.
                         XElement assessmentItem = new XElement("assessmentItem",
                             new XAttribute("identifier", question.Id),
                             new XElement("itemBody",
                                 new XElement("choiceInteraction",
                                     new XElement("prompt", question.Text)
-                                // Add more elements here as needed, e.g., choices for a multiple-choice question
+                                // Voeg hier meer elementen toe indien nodig, bijvoorbeeld keuzes voor een meerkeuzevraag.
                                 )
                             )
                         );
 
-                        // Add the 'assessmentItem' element to the root
-                        qtiDocument.Root.Add(assessmentItem);
+                        // Voeg het 'assessmentItem'-element toe aan de hoofdstructuur.
+                        xmlDocument.Root.Add(assessmentItem);
+
+                        // Voeg een bronvermelding toe voor de vraag.
+                        manifestContent.Append($"<resource identifier=\"{question.Id}\" type=\"imsqti_item_xmlv2p1\">\n");
+                        manifestContent.Append($"<file href=\"QuestionFiles/{question.Id}.xml\"/>\n");
+                        manifestContent.Append("</resource>\n");
                     }
                 }
 
-                // Save the QTI document to a file
-                string filePath = "\\questionFiles";
-                qtiDocument.Save(filePath);
+                // Sluit het gedeelte met bronnen in het manifest af.
+                manifestContent.Append("</resources>\n");
+                manifestContent.Append("</manifest>");
 
-            //    // Inform the user that the file has been generated
-            //    MessageBox.Show($"QTI file has been generated at {filePath}");
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Please select at least one question.");
+                // Sla het XML-document op naar een bestand.
+                string xmlFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/QuestionFiles/Question_ID.xml";
+                xmlDocument.Save(xmlFilePath);
+
+                // Sla het manifestbestand op.
+                string manifestFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/QuestionFiles/Imsmanifest.xml";
+                File.WriteAllText(manifestFilePath, manifestContent.ToString());
+
+                // Zip beide bestanden.
+                string zipFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/QuestionFiles/QuestionFiles.zip";
+                using (var zip = new ZipArchive(File.Create(zipFilePath), ZipArchiveMode.Create))
+                {
+                    zip.CreateEntryFromFile(xmlFilePath, Path.GetFileName(xmlFilePath));
+                    zip.CreateEntryFromFile(manifestFilePath, Path.GetFileName(manifestFilePath));
+                }
+
+                // Verwijder individuele bestanden.
+                File.Delete(xmlFilePath);
+                File.Delete(manifestFilePath);
             }
         }
     }
