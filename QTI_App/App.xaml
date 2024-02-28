@@ -11,6 +11,8 @@
                 <!-- Other merged dictionaries here -->
             </ResourceDictionary.MergedDictionaries>
             <!-- Other app resources here -->
+            
+            <!--Voegt styling toe aan de geselecteerde ListBox-->
             <SolidColorBrush x:Key="ListBoxItemBackgroundSelected"
                              Color="LightBlue" />
             <SolidColorBrush x:Key="ListBoxItemForeground"
