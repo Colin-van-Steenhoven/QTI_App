@@ -27,7 +27,6 @@ namespace QTI_App
     /// </summary>
     public sealed partial class CreatePage : Page
     {
-        private inprogress _navigationService;
         private List<Question> questions;
         private ObservableCollection<Answer> answers = new ObservableCollection<Answer>();
 
@@ -66,7 +65,7 @@ namespace QTI_App
                 }
 
                 db.SaveChanges();
-                _navigationService.GoBack();
+                this.Frame.GoBack();
             }
             else
             {
