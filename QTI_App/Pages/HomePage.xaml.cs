@@ -45,7 +45,7 @@ namespace QTI_App.Pages
         }
         private void addNewQuestionB_Click(object sender, RoutedEventArgs e)
         {
-
+            this.Frame.Navigate(typeof(CreatePage));
         }
        private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -55,6 +55,6 @@ namespace QTI_App.Pages
                 var filteredQuestions = db.questions.Where(q => q.Text.ToLower().Contains(searchText)).ToList();
                 questionsLv.ItemsSource = filteredQuestions;
             }
-        }
+        }   
     }
 }
