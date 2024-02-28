@@ -11,5 +11,6 @@
 
     <Grid>
         <TextBlock>Test</TextBlock>
+        <Button Click="Button_Click">test</Button>
     </Grid>
 </Page>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="QTI_App.CreatePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:QTI_App"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:localData1="using:E4_The_Big_Three.Data"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBox x:Name="QuestionTextBox" Grid.Row="0" Margin="0,0,0,10" VerticalAlignment="Top" HorizontalAlignment="Stretch" PlaceholderText="Vul hier uw vraag in"/>
+
+        <ListView Grid.Row="1"
+              x:Name="TagListView"
+              Margin="15"
+              Header="Tags">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="localData1:Tag">
+                    <Grid Padding="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="{x:Bind Name}"
+                               VerticalAlignment="Center" Foreground="White" />
+                        <Button Grid.Column="1" Background="#FF5C5C5C" Foreground="White" Margin="5"
+                            Click="TagRemoveButton_Click">
+                            Remove
+                        </Button>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <StackPanel Grid.Row="2"
+                Orientation="Horizontal">
+            <ComboBox x:Name="tagsComboBox"
+                  Margin="15" DisplayMemberPath="Name"/>
+            <Button Click="AddTagButton_Click"
+                Margin="15" Foreground="White">
+                Add Tag
+            </Button>
+        </StackPanel>
+
+        <Button Content="Create" Grid.Row="3" Click="SaveQuestionButton_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#4CAF50" Foreground="White"/>
+    </Grid>
+
+</Page>

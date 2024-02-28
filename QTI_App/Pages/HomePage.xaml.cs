@@ -5,6 +5,7 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
+using QTI_App.Controllers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,5 +28,11 @@ namespace QTI_App.Pages
         {
             this.InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(CreatePage));
+        }
+
     }
 }

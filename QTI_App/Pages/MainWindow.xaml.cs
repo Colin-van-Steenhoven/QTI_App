@@ -27,6 +27,7 @@ namespace QTI_App
     public sealed partial class MainWindow : Window
     {
         private NavigationService _navigationService;
+        
         public MainWindow()
         {
             this.InitializeComponent();
