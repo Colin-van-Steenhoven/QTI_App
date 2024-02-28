@@ -18,8 +18,12 @@
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0"
-                  Background="Lavender"
+                  Background="AliceBlue"
                   Padding="10">
+
+                <Image Width="50"
+                       Source="/Assets/Logo.png"
+                       HorizontalAlignment="Left"/>
 
                 <Button Content="Vraag toevoegen"
                         Foreground="Black"
@@ -27,7 +31,11 @@
                         x:Name="addNewQuestionB"
                         Click="addNewQuestionB_Click"/>
             </Grid>
-
+            <TextBox Grid.Row="0"
+             PlaceholderText="Search..."
+             HorizontalAlignment="Left"
+             x:Name="searchTextBox"
+             TextChanged="SearchTextBox_TextChanged"/>
 
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
