@@ -27,7 +27,6 @@ namespace QTI_App.Pages
     /// </summary>
     public sealed partial class HomePage : Page
     {
-        private NavigationService _navigationService;
         public HomePage()
         {
             this.InitializeComponent();
@@ -40,7 +39,13 @@ namespace QTI_App.Pages
 
         private void questionsLv_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
-            _navigationService.NavigateTo<EditPage>();
+            if (questionsLv.SelectedItem != null)
+            {
+                var selectedQuestion = (Question)questionsLv.SelectedItem;
+                int questionId = (int)selectedQuestion.Id;
+
+                Frame.Navigate(typeof(EditPage), questionId);
+            }
         }
 
         private void addNewQuestionB_Click(object sender, RoutedEventArgs e)
