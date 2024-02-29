@@ -9,10 +9,6 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Page.Resources>
-        <utility:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-        <utility:InvertedBooleanToVisibilityConverter x:Key="InvertedBooleanToVisibilityConverter" />
-    </Page.Resources>
 
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -21,7 +17,29 @@
         </Grid.RowDefinitions>
 
         <TextBox x:Name="QuestionTextBox" Grid.Row="0" Margin="0,0,0,10"/>
-        <Button x:Name="addAnswerButton" Grid.Row="1" Click="addAnswerButton_Click" Content="voeg antwoord toe"/>
+
+        <ListView Grid.Row="1"
+              x:Name="TagListView"
+              Margin="15"
+              Header="Tags">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="localData1:Tag">
+                    <Grid Padding="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="{x:Bind Name}"
+                               VerticalAlignment="Center" Foreground="White" />
+                        <Button Grid.Column="1" Background="#FF5C5C5C" Foreground="White" Margin="5"
+                            Click="TagRemoveButton_Click">
+                            Remove
+                        </Button>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
 
         <ListView IsItemClickEnabled="True" x:Name="answerListView" Width="350" Grid.Row="2">
             <ListView.ItemTemplate>
@@ -39,7 +57,17 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <Button Content="Create" Grid.Row="3" Click="Button_Click"/>
+        <StackPanel Grid.Row="2" Orientation="Vertical" Margin="15">
+            <ComboBox x:Name="tagsComboBox" DisplayMemberPath="Name"/>
+            <Button Click="AddTagButton_Click" Foreground="White">
+                Add Tag
+            </Button>
+            <Button Content="Create" Grid.Row="3" Click="Button_Click" Margin="15"/>
+
+            <Button x:Name="addAnswerButton" Grid.Row="4" Click="addAnswerButton_Click" Content="voeg antwoord toe" Margin="15"/>
+        </StackPanel>
+
+
 
         <ContentDialog x:Name="makeAnswernDialog" Title="Maak antwoord aan" PrimaryButtonText="OK" SecondaryButtonText="Cancel">
             <StackPanel>

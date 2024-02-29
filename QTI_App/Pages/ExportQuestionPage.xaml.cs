@@ -13,10 +13,10 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
-using E4_The_Big_Three.Data;
 using System.Xml.Linq;
 using System.IO.Compression;
 using System.Text;
+using QTI_App.Data;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -33,7 +33,7 @@ namespace QTI_App.Pages
             this.InitializeComponent();
 
             using var db = new AppDbContext();
-            var exportQuestions = db.questions.ToList();
+            var exportQuestions = db.Questions.ToList();
             selectQuestionsLB.ItemsSource = exportQuestions;
         }
 

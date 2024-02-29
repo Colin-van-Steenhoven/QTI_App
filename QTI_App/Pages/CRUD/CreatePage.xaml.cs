@@ -30,11 +30,22 @@ namespace QTI_App
         private List<Question> questions;
         private ObservableCollection<Answer> answers = new ObservableCollection<Answer>();
 
+        private int? currentTagId;
 
+        private List<Tag> tags;
+        private ObservableCollection<Tag> currentQuestionTags;
+        public int? tagId = null;
         public CreatePage()
         {
             this.InitializeComponent();
             answerListView.ItemsSource = answers;
+            currentQuestionTags = new ObservableCollection<Tag>();
+
+            currentTagId = tagId;
+            using (var db = new AppDbContext())
+            {
+                tagsComboBox.ItemsSource = db.Tags.ToList();
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -54,6 +65,21 @@ namespace QTI_App
                 db.Questions.Add(newQuestion);
                 db.SaveChanges();
 
+                var questionTags = new List<QuestionTag>();
+
+                foreach (var currentQuestionTag in currentQuestionTags)
+                {
+                    var tag = db.Tags.First(g => g.Id == currentQuestionTag.Id);
+
+                    var questionTag = new QuestionTag
+                    {
+                        Question = newQuestion,
+                        Tag = tag
+                    };
+
+                    questionTags.Add(questionTag);
+                }
+
                 foreach (var answer in answers)
                 {
                     db.Answers.Add(new Answer
@@ -72,6 +98,26 @@ namespace QTI_App
                 ShowErrorDialog("Er moet minimaal 1 goed antwoord zijn.");
             }
 
+        }
+        private void TagRemoveButton_Click(object sender, RoutedEventArgs e)
+        {
+            var button = (Button)sender;
+            var tag = (Tag)button.DataContext;
+
+            currentQuestionTags.Remove(tag);
+        }
+
+        private void AddTagButton_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedTag = (Tag)tagsComboBox.SelectedItem;
+
+            if (selectedTag == null)
+            {
+                return;
+            }
+
+            currentQuestionTags.Add(selectedTag);
+            TagListView.ItemsSource = currentQuestionTags;
         }
 
         private async void addAnswerButton_Click(object sender, RoutedEventArgs e)
