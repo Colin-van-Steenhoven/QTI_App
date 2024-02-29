@@ -6,11 +6,63 @@
     xmlns:local="using:QTI_App.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:localData="using:QTI_App.Data"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <TextBlock>Test</TextBlock>
-        <Button Click="Button_Click">test</Button>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0"
+                  Background="AliceBlue"
+                  Padding="10">
+
+                <Image Width="50"
+                       Source="/Assets/Logo.png"
+                       HorizontalAlignment="Left"/>
+
+                <Button Content="Vraag toevoegen"
+                        Foreground="Black"
+                        HorizontalAlignment="Right"
+                        x:Name="addNewQuestionB"
+                        Click="addNewQuestionB_Click"/>
+            </Grid>
+            <TextBox Grid.Row="0"
+             PlaceholderText="Search..."
+             HorizontalAlignment="Left"
+             x:Name="searchTextBox"
+             TextChanged="SearchTextBox_TextChanged"/>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0">
+                    <ListView x:Name="questionsLv"
+                              IsDoubleTapEnabled="True"
+                              DoubleTapped="questionsLv_DoubleTapped">
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="localData:Question">
+                                <StackPanel>
+                                    <TextBlock>
+                                        <Run Text="{x:Bind Id}" />
+                                        <Run Text="{x:Bind Text}" />
+                                    </TextBlock>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+
+                <Grid Grid.Column="1">
+                </Grid>
+            </Grid>
+        </Grid>
     </Grid>
 </Page>

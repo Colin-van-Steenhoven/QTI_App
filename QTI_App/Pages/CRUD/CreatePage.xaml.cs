@@ -1,5 +1,5 @@
-using E4_The_Big_Three.Data;
 using Microsoft.EntityFrameworkCore;
+using QTI_App.Data;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -7,6 +7,7 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
+using QTI_App.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -34,16 +35,26 @@ namespace QTI_App
         private List<Tag> tags;
         private ObservableCollection<Tag> currentQuestionTags;
         public int? tagId = null;
+        private List<Question> questions;
+        private ObservableCollection<Answer> answers = new ObservableCollection<Answer>();
+
 
         public CreatePage()
         {
             this.InitializeComponent();
             
             currentTagId = tagId;
+            answerListView.ItemsSource = answers;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
 
             using var db = new AppDbContext();
 
-            using (var dbContext = new AppDbContext())
+            var text = QuestionTextBox.Text;
+
+            if (answers.Any(a => a.IsCorrect))
             {
 
                 currentQuestionTags = new ObservableCollection<Tag>();
@@ -68,6 +79,30 @@ namespace QTI_App
             {
                 currentQuestionTags = new ObservableCollection<Tag>();
                 TagListView.ItemsSource = Tag;
+                var newQuestion = new Question
+                {
+                    Text = text
+                };
+
+                db.Questions.Add(newQuestion);
+                db.SaveChanges();
+
+                foreach (var answer in answers)
+                {
+                    db.Answers.Add(new Answer
+                    {
+                        Text = answer.Text,
+                        IsCorrect = answer.IsCorrect,
+                        QuestionId = newQuestion.Id
+                    }); 
+                }
+
+                db.SaveChanges();
+                this.Frame.GoBack();
+            }
+            else
+            {
+                ShowErrorDialog("Er moet minimaal 1 goed antwoord zijn.");
             }
 
             using (var db = new AppDbContext())
@@ -154,6 +189,44 @@ namespace QTI_App
             {
                 currentQuestionTags.Add(selectedTag);
             }
+        }
+
+        private async void addAnswerButton_Click(object sender, RoutedEventArgs e)
+        {
+            await ShowMakeAnswerDialogAsync();
+        }
+
+
+        private async Task ShowMakeAnswerDialogAsync()
+        {
+            var result = await makeAnswernDialog.ShowAsync();
+
+            if (result == ContentDialogResult.Primary)
+            {
+                answers.Add(new Answer
+                {
+                    Text = answerTb.Text,
+                    IsCorrect = (bool)isCorrectCheckBox.IsChecked,
+                    
+                });
+
+                isCorrectCheckBox.IsChecked = false;
+                answerTb.Text = string.Empty;
+
+            }
+        }
+        private async Task ShowErrorDialog(string errorMessage)
+        {
+            ErrorMessageText.Text = errorMessage;
+            await errorDialog.ShowAsync();
+        }
+
+        private void deleteAnswerButton_Click(object sender, RoutedEventArgs e)
+        {
+            var button = (Button)sender;
+            var answer = (Answer)button.DataContext;
+
+            answers.Remove(answer);
         }
     }
 }
