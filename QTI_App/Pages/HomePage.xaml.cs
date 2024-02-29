@@ -56,5 +56,10 @@ namespace QTI_App.Pages
                 questionsLv.ItemsSource = filteredQuestions;
             }
         }   
+
+        private void exportQuestionB_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(ExportQuestionPage));
+        }
     }
 }

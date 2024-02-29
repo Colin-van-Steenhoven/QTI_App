@@ -13,6 +13,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="CreatePage.xaml" />
+    <None Remove="Pages\ExportQuestionPage.xaml" />
     <None Remove="Pages\HomePage.xaml" />
   </ItemGroup>
 
@@ -63,6 +64,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\ExportQuestionPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <!-- 
