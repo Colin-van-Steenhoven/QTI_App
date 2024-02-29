@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace E4_The_Big_Three.Data
+namespace QTI_App.Data
 {
     public class Answer
     {
@@ -14,5 +14,7 @@ namespace E4_The_Big_Three.Data
         public bool IsCorrect { get; set; }
         public int QuestionId { get; set; }
         public Question Question { get; set; }
+
+
     }
 }

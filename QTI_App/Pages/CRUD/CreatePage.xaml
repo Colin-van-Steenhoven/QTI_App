@@ -5,9 +5,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:QTI_App"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:localData1="using:QTI_App.Data"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:localData1="using:QTI_App.Data" xmlns:utility="using:QTI_App.Utility"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <utility:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <utility:InvertedBooleanToVisibilityConverter x:Key="InvertedBooleanToVisibilityConverter" />
+    </Page.Resources>
 
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -24,7 +29,9 @@
                     <Grid Margin="5">
                         <Border BorderBrush="Black" BorderThickness="1" Background="Gray" CornerRadius="5">
                             <StackPanel>
-                                <TextBlock Text="{Binding Text}"/>
+                                <TextBox x:Name="editTextBox" Text="{Binding Text, Mode=TwoWay}"/>
+                                <CheckBox x:Name="isCorrectCheckBox" IsChecked="{Binding IsCorrect, Mode=TwoWay}" Content="Is Correct"/>
+                                <Button x:Name="deleteAnswerButton" Content="Verwijder" Click="deleteAnswerButton_Click"/>
                             </StackPanel>
                         </Border>
                     </Grid>

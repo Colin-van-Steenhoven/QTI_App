@@ -6,8 +6,8 @@
     xmlns:local="using:QTI_App.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:data="using:E4_The_Big_Three.Data"
-      mc:Ignorable="d"
+    xmlns:localData="using:QTI_App.Data"
+    mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
@@ -48,7 +48,7 @@
                               IsDoubleTapEnabled="True"
                               DoubleTapped="questionsLv_DoubleTapped">
                         <ListView.ItemTemplate>
-                            <DataTemplate x:DataType="data:Question">
+                            <DataTemplate x:DataType="localData:Question">
                                 <StackPanel>
                                     <TextBlock>
                                         <Run Text="{x:Bind Id}" />

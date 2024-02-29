@@ -51,17 +51,17 @@ namespace QTI_App
                     Text = text
                 };
 
-                db.questions.Add(newQuestion);
+                db.Questions.Add(newQuestion);
                 db.SaveChanges();
 
                 foreach (var answer in answers)
                 {
-                    db.answers.Add(new Answer
+                    db.Answers.Add(new Answer
                     {
                         Text = answer.Text,
                         IsCorrect = answer.IsCorrect,
                         QuestionId = newQuestion.Id
-                    });
+                    }); 
                 }
 
                 db.SaveChanges();
@@ -79,6 +79,7 @@ namespace QTI_App
             await ShowMakeAnswerDialogAsync();
         }
 
+
         private async Task ShowMakeAnswerDialogAsync()
         {
             var result = await makeAnswernDialog.ShowAsync();
@@ -91,13 +92,24 @@ namespace QTI_App
                     IsCorrect = (bool)isCorrectCheckBox.IsChecked,
                     
                 });
-                answerListView.ItemsSource = answers;
+
+                isCorrectCheckBox.IsChecked = false;
+                answerTb.Text = string.Empty;
+
             }
         }
         private async Task ShowErrorDialog(string errorMessage)
         {
             ErrorMessageText.Text = errorMessage;
             await errorDialog.ShowAsync();
+        }
+
+        private void deleteAnswerButton_Click(object sender, RoutedEventArgs e)
+        {
+            var button = (Button)sender;
+            var answer = (Answer)button.DataContext;
+
+            answers.Remove(answer);
         }
     }
 }
