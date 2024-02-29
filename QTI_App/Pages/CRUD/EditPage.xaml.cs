@@ -1,4 +1,4 @@
-using E4_The_Big_Three.Data;
+using QTI_App.Data;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -21,29 +21,31 @@ namespace QTI_App.Pages.CRUD
 {
     public sealed partial class EditPage : Page
     {
-        private int questionId;
         private Question selectedQuestion;
 
         public EditPage()
         {
-            LoadSelectedQuestion(questionId);
+            InitializeComponent();
         }
 
-        private void LoadSelectedQuestion(int questionId)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            using (var db = new AppDbContext())
-            {
-                selectedQuestion = db.questions.FirstOrDefault(n => n.Id == questionId);
-
-                if (selectedQuestion != null)
-                {
-                    questionTB.Text = selectedQuestion.Text;
-                }
-            }
+            base.OnNavigatedTo(e);
+            selectedQuestion = (Question)e.Parameter;
+            questionTB.Text = selectedQuestion.Text.ToString();
         }
 
         private void saveB_Click(object sender, RoutedEventArgs e)
         {
+            using (var db = new AppDbContext())
+            {
+                selectedQuestion.Text = questionTB.Text;
+                db.questions.Update(selectedQuestion);
+                db.SaveChangesAsync();
+
+                Frame.GoBack();
+            }
+
 
         }
     }
