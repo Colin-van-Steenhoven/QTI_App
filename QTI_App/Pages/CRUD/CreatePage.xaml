@@ -15,13 +15,18 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="3*" />
+        </Grid.ColumnDefinitions>
 
         <TextBox x:Name="QuestionTextBox" Grid.Row="0" Margin="0,0,0,10"/>
 
-        <ListView Grid.Row="1"
+        <ListView Grid.Column="1"
               x:Name="TagListView"
               Margin="15"
-              Header="Tags">
+              Header="Tags"
+                  Grid.ColumnSpan="1">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="localData1:Tag">
                     <Grid Padding="10">
@@ -41,7 +46,7 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <ListView IsItemClickEnabled="True" x:Name="answerListView" Width="350" Grid.Row="2">
+        <ListView IsItemClickEnabled="True" Grid.Column="2" x:Name="answerListView" Width="350" >
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="localData1:Answer">
                     <Grid Margin="5">
@@ -57,7 +62,7 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <StackPanel Grid.Row="2" Orientation="Vertical" Margin="15">
+        <StackPanel Grid.Column="0" Orientation="Vertical" Margin="15">
             <ComboBox x:Name="tagsComboBox" DisplayMemberPath="Name"/>
             <Button Click="AddTagButton_Click" Foreground="White">
                 Add Tag
