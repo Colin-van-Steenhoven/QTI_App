@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using QTI_App.Data;
 using QTI_App.Data.Seeders;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using Windows.Devices.Usb;
 using Windows.System;
 using Windows.UI;
 
-namespace E4_The_Big_Three.Data
+namespace QTI_App.Data
 {
     class AppDbContext : DbContext
     {

@@ -5,9 +5,8 @@
       xmlns:local="using:QTI_App.Pages.CRUD"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:localData="using:E4_The_Big_Three.Data"
-      mc:Ignorable="d"
-      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+      xmlns:localData="using:QTI_App.Data"
+      mc:Ignorable="d">
 
     <Grid Margin="10">
         <Grid.RowDefinitions>

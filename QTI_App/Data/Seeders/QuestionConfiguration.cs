@@ -1,4 +1,4 @@
-﻿using E4_The_Big_Three.Data;
+﻿using QTI_App.Data;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using System;
