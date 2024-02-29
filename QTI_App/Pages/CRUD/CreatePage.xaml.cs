@@ -115,9 +115,15 @@ namespace QTI_App
             {
                 return;
             }
-
-            currentQuestionTags.Add(selectedTag);
-            TagListView.ItemsSource = currentQuestionTags;
+            if (!currentQuestionTags.Contains(selectedTag))
+            {
+                currentQuestionTags.Add(selectedTag);
+                TagListView.ItemsSource = currentQuestionTags;
+            }
+            else
+            {
+                ShowErrorDialog("Tag already added.");
+            }
         }
 
         private async void addAnswerButton_Click(object sender, RoutedEventArgs e)
