@@ -56,29 +56,27 @@ namespace QTI_App.Pages
                 // Itereer over geselecteerde items.
                 foreach (var item in selectQuestionsLB.SelectedItems)
                 {
-                    // Ervan uitgaande dat 'item' een aangepast type 'Vraag' is met eigenschappen 'Id' en 'Tekst'.
-                    Question question = item as Question;
-                    if (question != null)
-                    {
-                        // Maak voor elke vraag een 'assessmentItem'-element aan.
-                        XElement assessmentItem = new XElement("assessmentItem",
-                            new XAttribute("identifier", question.Id),
-                            new XElement("itemBody",
-                                new XElement("choiceInteraction",
-                                    new XElement("prompt", question.Text)
-                                // Voeg hier meer elementen toe indien nodig, bijvoorbeeld keuzes voor een meerkeuzevraag.
-                                )
+                    // Haal gegevens op uit de database voor de vraag.
+                    Question question = GetQuestionDataFromDatabase(item);
+
+                    // Maak voor elke vraag een 'assessmentItem'-element aan.
+                    XElement assessmentItem = new XElement("assessmentItem",
+                        new XAttribute("identifier", question.Id),
+                        new XElement("itemBody",
+                            new XElement("choiceInteraction",
+                                new XElement("prompt", question.Text)
+                            // Voeg hier meer elementen toe indien nodig, bijvoorbeeld keuzes voor een meerkeuzevraag.
                             )
-                        );
+                        )
+                    );
 
-                        // Voeg het 'assessmentItem'-element toe aan de hoofdstructuur.
-                        xmlDocument.Root.Add(assessmentItem);
+                    // Voeg het 'assessmentItem'-element toe aan de hoofdstructuur.
+                    xmlDocument.Root.Add(assessmentItem);
 
-                        // Voeg een bronvermelding toe voor de vraag.
-                        manifestContent.Append($"<resource identifier=\"{question.Id}\" type=\"imsqti_item_xmlv2p1\">\n");
-                        manifestContent.Append($"<file href=\"QuestionFiles/{question.Id}.xml\"/>\n");
-                        manifestContent.Append("</resource>\n");
-                    }
+                    // Voeg een bronvermelding toe voor de vraag.
+                    manifestContent.Append($"<resource identifier=\"{question.Id}\" type=\"imsqti_item_xmlv2p1\">\n");
+                    manifestContent.Append($"<file href=\"QuestionFiles/{question.Id}.xml\"/>\n");
+                    manifestContent.Append("</resource>\n");
                 }
 
                 // Sluit het gedeelte met bronnen in het manifest af.
@@ -106,5 +104,15 @@ namespace QTI_App.Pages
                 File.Delete(manifestFilePath);
             }
         }
+
+        // Methode om vraaggegevens uit de database op te halen
+        private Question GetQuestionDataFromDatabase(object item)
+        {
+            // Vervang deze implementatie door de methode om gegevens uit de database op te halen
+            // Hieronder is een dummy-implementatie
+            var question = item as Question;
+            return new Question { Id = question.Id, Text = question.Text, /*Answers = new List<string> { "Antwoord 1", "Antwoord 2", "Antwoord 3" }*/ };
+        }
+
     }
 }
