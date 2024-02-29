@@ -17,6 +17,7 @@ using E4_The_Big_Three.Data;
 using System.Xml.Linq;
 using System.IO.Compression;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -65,10 +66,31 @@ namespace QTI_App.Pages
                         new XElement("itemBody",
                             new XElement("choiceInteraction",
                                 new XElement("prompt", question.Text)
-                            // Voeg hier meer elementen toe indien nodig, bijvoorbeeld keuzes voor een meerkeuzevraag.
                             )
                         )
                     );
+
+                    // Voeg antwoorden toe aan de vraag, indien beschikbaar.
+                    foreach (var answer in question.Answers)
+                    {
+                        // Maak een 'simpleChoice'-element aan voor elk antwoord.
+                        XElement simpleChoice = new XElement("simpleChoice",
+                            new XAttribute("identifier", answer.Id),
+                            answer.Text
+                        );
+
+                        // Voeg het 'simpleChoice'-element toe aan de vraag.
+                        assessmentItem.Element("itemBody")
+                                     .Element("choiceInteraction")
+                                     .Add(simpleChoice);
+                    }
+
+                    // Voeg tags toe aan de vraag, indien beschikbaar.
+                    foreach (var tag in question.QuestionTags)
+                    {
+                        // Voeg de naam van de tag toe aan het 'assessmentItem'-element.
+                        assessmentItem.Add(new XElement("tag", tag.Tag.Name));
+                    }
 
                     // Voeg het 'assessmentItem'-element toe aan de hoofdstructuur.
                     xmlDocument.Root.Add(assessmentItem);
@@ -107,12 +129,25 @@ namespace QTI_App.Pages
 
         // Methode om vraaggegevens uit de database op te halen
         private Question GetQuestionDataFromDatabase(object item)
-        {
-            // Vervang deze implementatie door de methode om gegevens uit de database op te halen
-            // Hieronder is een dummy-implementatie
-            var question = item as Question;
-            return new Question { Id = question.Id, Text = question.Text, /*Answers = new List<string> { "Antwoord 1", "Antwoord 2", "Antwoord 3" }*/ };
-        }
+        { 
+            // Controleer of het item een Question-object is
+            if (!(item is Question questionItem))
+            {
+                // Als het item geen Question-object is, retourneer null of handel de fout af volgens jouw vereisten
+                return null;
+            }
 
+            using (var db = new AppDbContext())
+            {
+                // Haal de vraag op uit de database op basis van het Id van het Question-object
+                var question = db.questions
+                                 .Include(q => q.Answers) // Inclusief antwoorden
+                                 .Include(q => q.QuestionTags)// Inclusief tags van de vraag
+                                 .ThenInclude(t => t.Tag)//Haalt vanuit de QuestionTags klasse de Tag op
+                                 .SingleOrDefault(q => q.Id == questionItem.Id);
+
+                return question;
+            }
+        }
     }
 }
