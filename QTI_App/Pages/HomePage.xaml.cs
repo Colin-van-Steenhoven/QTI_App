@@ -37,7 +37,7 @@ namespace QTI_App.Pages
         {
             using (var db = new AppDbContext())
             {
-                var questions = db.questions.ToList();
+                var questions = db.Questions.ToList();
                 questionsLv.ItemsSource = questions;
             }
         }
@@ -59,9 +59,14 @@ namespace QTI_App.Pages
             using (var db = new AppDbContext())
             {
                 string searchText = searchTextBox.Text.ToLower();
-                var filteredQuestions = db.questions.Where(q => q.Text.ToLower().Contains(searchText)).ToList();
+                var filteredQuestions = db.Questions.Where(q => q.Text.ToLower().Contains(searchText)).ToList();
                 questionsLv.ItemsSource = filteredQuestions;
             }
         }   
+
+        private void exportQuestionB_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(ExportQuestionPage));
+        }
     }
 }

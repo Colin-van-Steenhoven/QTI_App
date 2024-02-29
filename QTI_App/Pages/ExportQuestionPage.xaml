@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Page
-    x:Class="QTI_App.Pages.HomePage"
+    x:Class="QTI_App.Pages.ExportQuestionPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:QTI_App.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:data="using:QTI_App.Data"
-      mc:Ignorable="d"
+    xmlns:data="using:QTI_App.Data"
+    mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
@@ -23,25 +23,8 @@
 
                 <Image Width="50"
                        Source="/Assets/Logo.png"
-                       HorizontalAlignment="Left"/>
-
-                <Button Content="Vraag toevoegen"
-                        Foreground="Black"
-                        HorizontalAlignment="Right"
-                        x:Name="addNewQuestionB"
-                        Click="addNewQuestionB_Click"/>
-
-                <Button Content="Vraag exporteren"
-                        Foreground="Black"
-                        HorizontalAlignment="Center"
-                        x:Name="exportQuestionB"
-                        Click="exportQuestionB_Click" />
+                       HorizontalAlignment="Left" />
             </Grid>
-            <TextBox Grid.Row="0"
-             PlaceholderText="Search..."
-             HorizontalAlignment="Left"
-             x:Name="searchTextBox"
-             TextChanged="SearchTextBox_TextChanged"/>
 
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
@@ -50,11 +33,10 @@
                 </Grid.ColumnDefinitions>
 
                 <Grid Grid.Column="0">
-                    <ListView x:Name="questionsLv"
-                              IsDoubleTapEnabled="True"
-                              DoubleTapped="questionsLv_DoubleTapped">
-                        <ListView.ItemTemplate>
-                            <DataTemplate x:DataType="localData:Question">
+                    <ListBox x:Name="selectQuestionsLB"
+                             SelectionMode="Multiple">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate x:DataType="data:Question">
                                 <StackPanel>
                                     <TextBlock>
                                         <Run Text="{x:Bind Id}" />
@@ -62,12 +44,14 @@
                                     </TextBlock>
                                 </StackPanel>
                             </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                 </Grid>
 
-                <Grid Grid.Column="1">
-                </Grid>
+                <Button Content="Genereer"
+                        Margin="10"
+                        x:Name="generateQTIB"
+                        Click="generateQTIB_Click" />
             </Grid>
         </Grid>
     </Grid>

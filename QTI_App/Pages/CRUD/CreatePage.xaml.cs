@@ -30,11 +30,22 @@ namespace QTI_App
         private List<Question> questions;
         private ObservableCollection<Answer> answers = new ObservableCollection<Answer>();
 
+        private int? currentTagId;
 
+        private List<Tag> tags;
+        private ObservableCollection<Tag> currentQuestionTags;
+        public int? tagId = null;
         public CreatePage()
         {
             this.InitializeComponent();
             answerListView.ItemsSource = answers;
+            currentQuestionTags = new ObservableCollection<Tag>();
+
+            currentTagId = tagId;
+            using (var db = new AppDbContext())
+            {
+                tagsComboBox.ItemsSource = db.Tags.ToList();
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -51,17 +62,32 @@ namespace QTI_App
                     Text = text
                 };
 
-                db.questions.Add(newQuestion);
+                db.Questions.Add(newQuestion);
                 db.SaveChanges();
+
+                var questionTags = new List<QuestionTag>();
+
+                foreach (var currentQuestionTag in currentQuestionTags)
+                {
+                    var tag = db.Tags.First(g => g.Id == currentQuestionTag.Id);
+
+                    var questionTag = new QuestionTag
+                    {
+                        Question = newQuestion,
+                        Tag = tag
+                    };
+
+                    questionTags.Add(questionTag);
+                }
 
                 foreach (var answer in answers)
                 {
-                    db.answers.Add(new Answer
+                    db.Answers.Add(new Answer
                     {
                         Text = answer.Text,
                         IsCorrect = answer.IsCorrect,
                         QuestionId = newQuestion.Id
-                    });
+                    }); 
                 }
 
                 db.SaveChanges();
@@ -73,11 +99,38 @@ namespace QTI_App
             }
 
         }
+        private void TagRemoveButton_Click(object sender, RoutedEventArgs e)
+        {
+            var button = (Button)sender;
+            var tag = (Tag)button.DataContext;
+
+            currentQuestionTags.Remove(tag);
+        }
+
+        private void AddTagButton_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedTag = (Tag)tagsComboBox.SelectedItem;
+
+            if (selectedTag == null)
+            {
+                return;
+            }
+            if (!currentQuestionTags.Contains(selectedTag))
+            {
+                currentQuestionTags.Add(selectedTag);
+                TagListView.ItemsSource = currentQuestionTags;
+            }
+            else
+            {
+                ShowErrorDialog("Tag already added.");
+            }
+        }
 
         private async void addAnswerButton_Click(object sender, RoutedEventArgs e)
         {
             await ShowMakeAnswerDialogAsync();
         }
+
 
         private async Task ShowMakeAnswerDialogAsync()
         {
@@ -91,13 +144,24 @@ namespace QTI_App
                     IsCorrect = (bool)isCorrectCheckBox.IsChecked,
                     
                 });
-                answerListView.ItemsSource = answers;
+
+                isCorrectCheckBox.IsChecked = false;
+                answerTb.Text = string.Empty;
+
             }
         }
         private async Task ShowErrorDialog(string errorMessage)
         {
             ErrorMessageText.Text = errorMessage;
             await errorDialog.ShowAsync();
+        }
+
+        private void deleteAnswerButton_Click(object sender, RoutedEventArgs e)
+        {
+            var button = (Button)sender;
+            var answer = (Answer)button.DataContext;
+
+            answers.Remove(answer);
         }
     }
 }

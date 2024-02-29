@@ -14,5 +14,7 @@ namespace QTI_App.Data
         public bool IsCorrect { get; set; }
         public int QuestionId { get; set; }
         public Question Question { get; set; }
+
+
     }
 }
