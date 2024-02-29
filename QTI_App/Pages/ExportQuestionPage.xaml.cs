@@ -140,7 +140,7 @@ namespace QTI_App.Pages
             using (var db = new AppDbContext())
             {
                 // Haal de vraag op uit de database op basis van het Id van het Question-object
-                var question = db.questions
+                var question = db.Questions
                                  .Include(q => q.Answers) // Inclusief antwoorden
                                  .Include(q => q.QuestionTags)// Inclusief tags van de vraag
                                  .ThenInclude(t => t.Tag)//Haalt vanuit de QuestionTags klasse de Tag op
