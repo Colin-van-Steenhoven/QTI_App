@@ -46,9 +46,8 @@ namespace QTI_App.Pages
             if (questionsLv.SelectedItem != null)
             {
                 var selectedQuestion = (Question)questionsLv.SelectedItem;
-                int questionId = (int)selectedQuestion.Id;
 
-                Frame.Navigate(typeof(EditPage), questionId);
+                Frame.Navigate(typeof(EditPage), selectedQuestion);
             }
         }
         private void addNewQuestionB_Click(object sender, RoutedEventArgs e)
