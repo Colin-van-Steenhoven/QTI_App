@@ -1,4 +1,3 @@
-using QTI_App.Data;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -25,36 +24,15 @@ namespace QTI_App.Pages
     /// </summary>
     public sealed partial class HomePage : Page
     {
-        private NavigationService _navigationService;
         public HomePage()
         {
             this.InitializeComponent();
-            InitializeQuestions();
         }
-        private void InitializeQuestions()
-        {
-            using (var db = new AppDbContext())
-            {
-                var questions = db.Questions.ToList();
-                questionsLv.ItemsSource = questions;
-            }
-        }
-        private void questionsLv_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
-        {
 
-        }
-        private void addNewQuestionB_Click(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(CreatePage));
         }
-       private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            using (var db = new AppDbContext())
-            {
-                string searchText = searchTextBox.Text.ToLower();
-                var filteredQuestions = db.Questions.Where(q => q.Text.ToLower().Contains(searchText)).ToList();
-                questionsLv.ItemsSource = filteredQuestions;
-            }
-        }   
+
     }
 }

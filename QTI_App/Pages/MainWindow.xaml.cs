@@ -1,4 +1,4 @@
-using QTI_App.Data;
+using E4_The_Big_Three.Data;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -26,7 +26,8 @@ namespace QTI_App
     /// </summary>
     public sealed partial class MainWindow : Window
     {
-        //dit moet bovenaan iedere page staan
+        private NavigationService _navigationService;
+        
         public MainWindow()
         {
             this.InitializeComponent();
@@ -35,7 +36,12 @@ namespace QTI_App
                 db.Database.EnsureDeleted();
                 db.Database.EnsureCreated();
             }
-            this.ContentFrame.Navigate(typeof(HomePage));
+            InitializeNavigationService(ContentFrame);
+            _navigationService.NavigateTo<CreatePage>();
+        }
+        private void InitializeNavigationService(Frame frame)
+        {
+            _navigationService = new NavigationService(frame);
         }
     }
 }

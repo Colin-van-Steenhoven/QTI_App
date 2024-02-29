@@ -5,14 +5,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:QTI_App"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:localData1="using:QTI_App.Data" xmlns:utility="using:QTI_App.Utility"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:localData1="using:E4_The_Big_Three.Data"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
-    <Page.Resources>
-        <utility:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-        <utility:InvertedBooleanToVisibilityConverter x:Key="InvertedBooleanToVisibilityConverter" />
-    </Page.Resources>
 
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -43,23 +38,6 @@
                             Click="TagRemoveButton_Click">
                             Remove
                         </Button>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        <TextBox x:Name="QuestionTextBox" Grid.Row="0" Margin="0,0,0,10"/>
-        <Button x:Name="addAnswerButton" Grid.Row="1" Click="addAnswerButton_Click" Content="voeg antwoord toe"/>
-
-        <ListView IsItemClickEnabled="True" x:Name="answerListView" Width="350" Grid.Row="2">
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="localData1:Answer">
-                    <Grid Margin="5">
-                        <Border BorderBrush="Black" BorderThickness="1" Background="Gray" CornerRadius="5">
-                            <StackPanel>
-                                <TextBox x:Name="editTextBox" Text="{Binding Text, Mode=TwoWay}"/>
-                                <CheckBox x:Name="isCorrectCheckBox" IsChecked="{Binding IsCorrect, Mode=TwoWay}" Content="Is Correct"/>
-                                <Button x:Name="deleteAnswerButton" Content="Verwijder" Click="deleteAnswerButton_Click"/>
-                            </StackPanel>
-                        </Border>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
@@ -76,26 +54,6 @@
         </StackPanel>
 
         <Button Content="Create" Grid.Row="3" Click="SaveQuestionButton_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#4CAF50" Foreground="White"/>
-        <Button Content="Create" Grid.Row="3" Click="Button_Click"/>
-
-        <ContentDialog x:Name="makeAnswernDialog" Title="Maak antwoord aan" PrimaryButtonText="OK" SecondaryButtonText="Cancel">
-            <StackPanel>
-                <TextBlock Text="Vul antwoord in"/>
-                <TextBox x:Name="answerTb"/>
-                <CheckBox x:Name="isCorrectCheckBox" Content="Is Correct"/>
-            </StackPanel>
-        </ContentDialog>
-        <ContentDialog
-            x:Name="errorDialog"
-            Title="Error"
-            PrimaryButtonText="OK"
-            SecondaryButtonText="">
-            <StackPanel>
-                <TextBlock Text="An error occurred:" />
-                <TextBlock x:Name="ErrorMessageText" Text="" Foreground="Red" />
-            </StackPanel>
-        </ContentDialog>
-
     </Grid>
 
 </Page>

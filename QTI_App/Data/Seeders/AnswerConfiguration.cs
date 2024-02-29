@@ -1,4 +1,4 @@
-﻿using QTI_App.Data;
+﻿using E4_The_Big_Three.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -15,8 +15,8 @@ namespace QTI_App.Data.Seeders
         public void Configure(EntityTypeBuilder<Answer> builder)
         {
             builder.HasData(
-                new Answer { Id = 1, Text = "Answer 1", QuestionId = 1, Option = 'a', IsCorrect = true },
-                new Answer { Id = 2, Text = "Answer 2", QuestionId = 2, Option = 'a', IsCorrect = false }
+                new Answer { Id = 1, Text = "Answer 1", QuestionId = 1 },
+                new Answer { Id = 2, Text = "Answer 2", QuestionId = 2 }
             );
 
             // Configure the one-to-many relationship

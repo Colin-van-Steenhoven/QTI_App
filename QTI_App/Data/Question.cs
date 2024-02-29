@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QTI_App.Data
+namespace E4_The_Big_Three.Data
 {
     public class Question
     {
