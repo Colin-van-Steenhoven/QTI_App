@@ -34,8 +34,8 @@ namespace QTI_App.Pages
             this.InitializeComponent();
 
             using var db = new AppDbContext();
-            var tagList = db.tags.ToList();
-            var exportQuestions = db.questions.Include(q => q.Answers)
+            var tagList = db.Tags.ToList();
+            var exportQuestions = db.Questions.Include(q => q.Answers)
                                               .Include(q => q.QuestionTags)
                                               .ThenInclude(t => t.Tag)
                                               .ToList();
@@ -51,7 +51,7 @@ namespace QTI_App.Pages
             {
                 using var db = new AppDbContext();
                 var selectedTag = (Tag)searchTagCB.SelectedItem;
-                var filteredQuestions = db.questions.Include(q => q.Answers)
+                var filteredQuestions = db.Questions.Include(q => q.Answers)
                                                     .Include(q => q.QuestionTags)
                                                     .ThenInclude(t => t.Tag)
                                                     .Where(q => q.QuestionTags.Any(qt => qt.TagId == selectedTag.Id))
@@ -62,7 +62,7 @@ namespace QTI_App.Pages
             {
                 // If no tag is selected, show all questions
                 using var db = new AppDbContext();
-                var exportQuestions = db.questions.Include(q => q.Answers)
+                var exportQuestions = db.Questions.Include(q => q.Answers)
                                                   .Include(q => q.QuestionTags)
                                                   .ThenInclude(t => t.Tag)
                                                   .ToList();
