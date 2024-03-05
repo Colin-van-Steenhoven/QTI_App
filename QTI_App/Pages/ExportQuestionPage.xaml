@@ -38,10 +38,21 @@
                         <ListBox.ItemTemplate>
                             <DataTemplate x:DataType="data:Question">
                                 <StackPanel>
-                                    <TextBlock>
-                                        <Run Text="{x:Bind Id}" />
-                                        <Run Text="{x:Bind Text}" />
-                                    </TextBlock>
+                                    <TextBlock Text="{x:Bind Text}" />
+                                    <ItemsControl ItemsSource="{x:Bind Answers}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Text}" />
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                    <ItemsControl ItemsSource="{x:Bind QuestionTags}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Tag.Name}" />
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
                                 </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>

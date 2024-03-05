@@ -34,7 +34,10 @@ namespace QTI_App.Pages
             this.InitializeComponent();
 
             using var db = new AppDbContext();
-            var exportQuestions = db.questions.ToList();
+            var exportQuestions = db.questions.Include(q => q.Answers) // Inclusief antwoorden
+                                 .Include(q => q.QuestionTags)// Inclusief tags van de vraag
+                                 .ThenInclude(t => t.Tag)//Haalt vanuit de QuestionTags klasse de Tag op;
+                                 .ToList();
             selectQuestionsLB.ItemsSource = exportQuestions;
         }
 
