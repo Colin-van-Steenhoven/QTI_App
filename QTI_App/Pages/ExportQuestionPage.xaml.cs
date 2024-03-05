@@ -28,17 +28,46 @@ namespace QTI_App.Pages
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class ExportQuestionPage : Page
-    {
+    { 
         public ExportQuestionPage()
         {
             this.InitializeComponent();
 
             using var db = new AppDbContext();
-            var exportQuestions = db.questions.Include(q => q.Answers) // Inclusief antwoorden
-                                 .Include(q => q.QuestionTags)// Inclusief tags van de vraag
-                                 .ThenInclude(t => t.Tag)//Haalt vanuit de QuestionTags klasse de Tag op;
-                                 .ToList();
+            var tagList = db.tags.ToList();
+            var exportQuestions = db.questions.Include(q => q.Answers)
+                                              .Include(q => q.QuestionTags)
+                                              .ThenInclude(t => t.Tag)
+                                              .ToList();
             selectQuestionsLB.ItemsSource = exportQuestions;
+            searchTagCB.ItemsSource = tagList;
+
+            searchTagCB.SelectionChanged += SearchTagCB_SelectionChanged;
+        }
+
+        private void SearchTagCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (searchTagCB.SelectedItem != null)
+            {
+                using var db = new AppDbContext();
+                var selectedTag = (Tag)searchTagCB.SelectedItem;
+                var filteredQuestions = db.questions.Include(q => q.Answers)
+                                                    .Include(q => q.QuestionTags)
+                                                    .ThenInclude(t => t.Tag)
+                                                    .Where(q => q.QuestionTags.Any(qt => qt.TagId == selectedTag.Id))
+                                                    .ToList();
+                selectQuestionsLB.ItemsSource = filteredQuestions;
+            }
+            else
+            {
+                // If no tag is selected, show all questions
+                using var db = new AppDbContext();
+                var exportQuestions = db.questions.Include(q => q.Answers)
+                                                  .Include(q => q.QuestionTags)
+                                                  .ThenInclude(t => t.Tag)
+                                                  .ToList();
+                selectQuestionsLB.ItemsSource = exportQuestions;
+            }
         }
 
         private void generateQTIB_Click(object sender, RoutedEventArgs e)
