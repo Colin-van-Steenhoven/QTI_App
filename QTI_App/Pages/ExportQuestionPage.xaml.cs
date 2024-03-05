@@ -34,8 +34,8 @@ namespace QTI_App.Pages
             this.InitializeComponent();
 
             using var db = new AppDbContext();
-            var tagList = db.tags.ToList();
-            var exportQuestions = db.questions.Include(q => q.Answers)
+            var tagList = db.Tags.ToList();
+            var exportQuestions = db.Questions.Include(q => q.Answers)
                                               .Include(q => q.QuestionTags)
                                               .ThenInclude(t => t.Tag)
                                               .ToList();
@@ -51,7 +51,7 @@ namespace QTI_App.Pages
             {
                 using var db = new AppDbContext();
                 var selectedTag = (Tag)searchTagCB.SelectedItem;
-                var filteredQuestions = db.questions.Include(q => q.Answers)
+                var filteredQuestions = db.Questions.Include(q => q.Answers)
                                                     .Include(q => q.QuestionTags)
                                                     .ThenInclude(t => t.Tag)
                                                     .Where(q => q.QuestionTags.Any(qt => qt.TagId == selectedTag.Id))
@@ -62,7 +62,7 @@ namespace QTI_App.Pages
             {
                 // If no tag is selected, show all questions
                 using var db = new AppDbContext();
-                var exportQuestions = db.questions.Include(q => q.Answers)
+                var exportQuestions = db.Questions.Include(q => q.Answers)
                                                   .Include(q => q.QuestionTags)
                                                   .ThenInclude(t => t.Tag)
                                                   .ToList();
@@ -172,7 +172,7 @@ namespace QTI_App.Pages
             using (var db = new AppDbContext())
             {
                 // Haal de vraag op uit de database op basis van het Id van het Question-object
-                var question = db.questions
+                var question = db.Questions
                                  .Include(q => q.Answers) // Inclusief antwoorden
                                  .Include(q => q.QuestionTags)// Inclusief tags van de vraag
                                  .ThenInclude(t => t.Tag)//Haalt vanuit de QuestionTags klasse de Tag op

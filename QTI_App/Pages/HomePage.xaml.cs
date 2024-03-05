@@ -29,7 +29,7 @@ namespace QTI_App.Pages
             this.InitializeComponent();
 
             using var db = new AppDbContext();
-            var questions = db.questions.ToList();
+            var questions = db.Questions.ToList();
             questionsLv.ItemsSource = questions;
         }
 

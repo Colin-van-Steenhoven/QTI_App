@@ -14,10 +14,10 @@ namespace E4_The_Big_Three.Data
 {
     class AppDbContext : DbContext
     {
-        public DbSet<Answer> answers { get; set; }
-        public DbSet<Question> questions { get; set; }
-        public DbSet<QuestionTag> questionTags { get; set; }
-        public DbSet<Tag> tags { get; set; }
+        public DbSet<Answer> Answers { get; set; }
+        public DbSet<Question> Questions { get; set; }
+        public DbSet<QuestionTag> QuestionTags { get; set; }
+        public DbSet<Tag> Tags { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
