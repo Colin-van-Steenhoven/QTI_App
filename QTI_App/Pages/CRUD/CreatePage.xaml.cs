@@ -16,6 +16,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -50,12 +51,11 @@ namespace QTI_App
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
             using var db = new AppDbContext();
 
             var text = QuestionTextBox.Text;
 
-            if (answers.Any(a => a.IsCorrect))
+            if (answers.Count >= 2 && answers.Any(a => a.IsCorrect))
             {
                 var newQuestion = new Question
                 {
@@ -87,7 +87,7 @@ namespace QTI_App
                         Text = answer.Text,
                         IsCorrect = answer.IsCorrect,
                         QuestionId = newQuestion.Id
-                    }); 
+                    });
                 }
 
                 db.SaveChanges();
@@ -95,9 +95,8 @@ namespace QTI_App
             }
             else
             {
-                ShowErrorDialog("Er moet minimaal 1 goed antwoord zijn.");
+                ShowErrorDialog("There must be at least 2 answers with at least 1 correct answer.");
             }
-
         }
         private void TagRemoveButton_Click(object sender, RoutedEventArgs e)
         {
