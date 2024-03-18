@@ -163,5 +163,6 @@ namespace QTI_App
 
             answers.Remove(answer);
         }
+
     }
 }
