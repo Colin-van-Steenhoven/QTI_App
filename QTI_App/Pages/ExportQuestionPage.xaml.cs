@@ -28,7 +28,10 @@ namespace QTI_App.Pages
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class ExportQuestionPage : Page
-    { 
+    {
+        bool isShuffled = false;
+        List<object> selectedQuestionsList = new List<object>();
+
         public ExportQuestionPage()
         {
             this.InitializeComponent();
@@ -81,13 +84,24 @@ namespace QTI_App.Pages
                     new XElement("assessmentItems")
                 );
 
+                if (shuffleCheckBox.IsChecked == true)
+                {
+                    // Populate selectedQuestionsList with the selected items
+                    selectedQuestionsList.AddRange(selectQuestionsLB.SelectedItems.Cast<object>());
+
+                    // Shuffle the selected items only if the checkbox is checked
+                    ShuffleQuestions(selectedQuestionsList);
+                    isShuffled = true;
+                }
+
+
                 // Initialiseer een stringbuilder voor de inhoud van Imsmanifest.xml.
                 StringBuilder manifestContent = new StringBuilder("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
                 manifestContent.Append("<manifest identifier=\"MANIFEST_001\" version=\"1.0\">\n");
                 manifestContent.Append("<resources>\n");
 
                 // Itereer over geselecteerde items.
-                foreach (var item in selectQuestionsLB.SelectedItems)
+                foreach (var item in isShuffled ? selectedQuestionsList : selectQuestionsLB.SelectedItems)
                 {
                     // Haal gegevens op uit de database voor de vraag.
                     Question question = GetQuestionDataFromDatabase(item);
@@ -185,6 +199,26 @@ namespace QTI_App.Pages
         private void shuffleFileB_Click(object sender, RoutedEventArgs e)
         {
 
+        private void bBack_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(HomePage));
+        }
+        private void ShuffleQuestions(IList<object> selectedItems)
+        {
+            Random random = new Random();
+            int n = selectedItems.Count;
+
+            for (int i = n - 1; i > 0; i--)
+            {
+                // Generate a random index between 0 and i (inclusive)
+                int j = random.Next(0, i + 1);
+
+                // Cast the items to the correct type (e.g., Question)
+                Question temp = (Question)selectedItems[i];
+                selectedItems[i] = (Question)selectedItems[j];
+                selectedItems[j] = temp;
+            }
+        }
         }
     }
-}
+
