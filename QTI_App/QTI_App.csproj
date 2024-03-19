@@ -12,6 +12,7 @@
     <EnableMsixTooling>true</EnableMsixTooling>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Pages\CRUD\EditPage.xaml" />
     <None Remove="CreatePage.xaml" />
     <None Remove="Pages\ExportQuestionPage.xaml" />
     <None Remove="Pages\HomePage.xaml" />
@@ -67,6 +68,11 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="Pages\ExportQuestionPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\CRUD\EditPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
