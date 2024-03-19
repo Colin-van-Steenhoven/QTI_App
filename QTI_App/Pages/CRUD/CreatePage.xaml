@@ -47,28 +47,45 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <ListView IsItemClickEnabled="True" Grid.Column="2" x:Name="answerListView" Width="350" >
+        <ListView IsItemClickEnabled="True"
+                  Grid.Column="2"
+                  x:Name="answerListView"
+                  Width="350">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="localData1:Answer">
                     <Grid Margin="5">
-                        <Border BorderBrush="Black" BorderThickness="1" Background="Gray" CornerRadius="5">
+                        <Border BorderBrush="Black"
+                                BorderThickness="1"
+                                Background="Gray"
+                                CornerRadius="5">
                             <StackPanel>
-                                <TextBox x:Name="editTextBox" Text="{Binding Text, Mode=TwoWay}"/>
-                                <CheckBox x:Name="isCorrectCheckBox" IsChecked="{Binding IsCorrect, Mode=TwoWay}" Content="Is Correct"/>
-                                <Button x:Name="deleteAnswerButton" Content="Verwijder" Click="deleteAnswerButton_Click"/>
+                                <TextBox x:Name="editTextBox"
+                                         Text="{Binding Text, Mode=TwoWay}" />
+                                <CheckBox x:Name="isCorrectCheckBox"
+                                          IsChecked="{Binding IsCorrect, Mode=TwoWay}"
+                                          Content="Is Correct" />
+                                <Button x:Name="deleteAnswerButton"
+                                        Content="Verwijder"
+                                        Click="deleteAnswerButton_Click" />
                             </StackPanel>
                         </Border>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-
-        <StackPanel Grid.Column="0" Orientation="Vertical" Margin="15">
-            <ComboBox x:Name="tagsComboBox" DisplayMemberPath="Name"/>
-            <Button Click="AddTagButton_Click" Foreground="White">
+        <StackPanel Grid.Column="0"
+                    Orientation="Vertical"
+                    Margin="15">
+            <ComboBox x:Name="tagsComboBox"
+                      DisplayMemberPath="Name" />
+            <Button Click="AddTagButton_Click"
+                    Foreground="White">
                 Add Tag
             </Button>
-            <Button Content="Create" Grid.Row="3" Click="Button_Click" Margin="15"/>
+            <Button Content="Create"
+                    Grid.Row="3"
+                    Click="Button_Click"
+                    Margin="15" />
 
             <Button x:Name="addAnswerButton" Grid.Row="4" Click="addAnswerButton_Click" Content="voeg antwoord toe" Margin="15"/>
 

@@ -73,7 +73,7 @@
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </Grid>
-
+                <CheckBox x:Name="shuffleCheckBox" Content="Shuffle Questions"/>
                 <Button Content="Genereer"
                         Margin="10"
                         x:Name="generateQTIB"
