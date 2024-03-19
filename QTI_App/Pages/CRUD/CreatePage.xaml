@@ -112,6 +112,37 @@
                     Margin="0,0,0,5" />
         </StackPanel>
     </StackPanel>
+            <Button Content="Create"
+                    Grid.Row="3"
+                    Click="Button_Click"
+                    Margin="15" />
+
+            <Button x:Name="addAnswerButton" Grid.Row="4" Click="addAnswerButton_Click" Content="voeg antwoord toe" Margin="15"/>
+
+            <Button x:Name="bBack" Click="bBack_Click"  Content="back"></Button>
+
+        </StackPanel>
+        
+
+
+
+        <ContentDialog x:Name="makeAnswernDialog" Title="Maak antwoord aan" PrimaryButtonText="OK" SecondaryButtonText="Cancel">
+            <StackPanel>
+                <TextBlock Text="Vul antwoord in"/>
+                <TextBox x:Name="answerTb"/>
+                <CheckBox x:Name="isCorrectCheckBox" Content="Is Correct"/>
+            </StackPanel>
+        </ContentDialog>
+        <ContentDialog
+            x:Name="errorDialog"
+            Title="Error"
+            PrimaryButtonText="OK"
+            SecondaryButtonText="">
+            <StackPanel>
+                <TextBlock Text="An error occurred:" />
+                <TextBlock x:Name="ErrorMessageText" Text="" Foreground="Red" />
+            </StackPanel>
+        </ContentDialog>
 
     <ContentDialog x:Name="makeAnswernDialog"
                    Title="Maak antwoord aan"

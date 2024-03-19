@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using QTI_App.Pages;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -159,6 +160,11 @@ namespace QTI_App
             var answer = (Answer)button.DataContext;
 
             answers.Remove(answer);
+        }
+
+        private void bBack_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(HomePage));
         }
     }
 }

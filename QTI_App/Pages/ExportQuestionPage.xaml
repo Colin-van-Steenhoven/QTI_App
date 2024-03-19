@@ -25,6 +25,8 @@
                 <Image Width="50"
                        Source="/Assets/Logo.png"
                        HorizontalAlignment="Left" />
+
+                <Button Background="DarkGray" Foreground="Black"  Margin="100,0,0,0" x:Name="bBack" Click="bBack_Click"  Content="back"></Button>
             </Grid>
 
             <Grid Grid.Row="1">
@@ -71,7 +73,7 @@
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </Grid>
-
+                <CheckBox x:Name="shuffleCheckBox" Content="Shuffle Questions"/>
                 <Button Content="Genereer"
                         Margin="10"
                         x:Name="generateQTIB"

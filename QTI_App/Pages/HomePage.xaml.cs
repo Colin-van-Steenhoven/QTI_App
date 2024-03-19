@@ -28,6 +28,7 @@ namespace QTI_App.Pages
     /// </summary>
     public sealed partial class HomePage : Page
     {
+
         private NavigationService _navigationService;
         public HomePage()
         {
