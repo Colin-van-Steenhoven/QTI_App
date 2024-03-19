@@ -181,5 +181,10 @@ namespace QTI_App.Pages
                 return question;
             }
         }
+
+        private void bBack_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(HomePage));
+        }
     }
 }

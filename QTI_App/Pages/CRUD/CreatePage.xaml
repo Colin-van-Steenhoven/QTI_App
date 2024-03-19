@@ -22,6 +22,7 @@
 
         <TextBox x:Name="QuestionTextBox" Grid.Row="0" Margin="0,0,0,10"/>
 
+
         <ListView Grid.Column="1"
               x:Name="TagListView"
               Margin="15"
@@ -70,7 +71,11 @@
             <Button Content="Create" Grid.Row="3" Click="Button_Click" Margin="15"/>
 
             <Button x:Name="addAnswerButton" Grid.Row="4" Click="addAnswerButton_Click" Content="voeg antwoord toe" Margin="15"/>
+
+            <Button x:Name="bBack" Click="bBack_Click"  Content="back"></Button>
+
         </StackPanel>
+        
 
 
 
