@@ -29,15 +29,10 @@ namespace QTI_App.Pages
         public HomePage()
         {
             this.InitializeComponent();
-            InitializeQuestions();
-        }
-        private void InitializeQuestions()
-        {
-            using (var db = new AppDbContext())
-            {
-                var questions = db.Questions.ToList();
-                questionsLv.ItemsSource = questions;
-            }
+
+            using var db = new AppDbContext();
+            var questions = db.Questions.ToList();
+            questionsLv.ItemsSource = questions;
         }
         private void questionsLv_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {

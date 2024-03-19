@@ -129,7 +129,7 @@ namespace QTI_App.Pages
 
                     // Voeg een bronvermelding toe voor de vraag.
                     manifestContent.Append($"<resource identifier=\"{question.Id}\" type=\"imsqti_item_xmlv2p1\">\n");
-                    manifestContent.Append($"<file href=\"QuestionFiles/{question.Id}.xml\"/>\n");
+                    manifestContent.Append($"<file href=\"QuestionFiles/Question_ID.xml\"/>\n");
                     manifestContent.Append("</resource>\n");
                 }
 
@@ -142,7 +142,7 @@ namespace QTI_App.Pages
                 xmlDocument.Save(xmlFilePath);
 
                 // Sla het manifestbestand op.
-                string manifestFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/QuestionFiles/Imsmanifest.xml";
+                string manifestFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/QuestionFiles/imsmanifest.xml";
                 File.WriteAllText(manifestFilePath, manifestContent.ToString());
 
                 // Zip beide bestanden.
@@ -180,6 +180,11 @@ namespace QTI_App.Pages
 
                 return question;
             }
+        }
+
+        private void shuffleFileB_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
