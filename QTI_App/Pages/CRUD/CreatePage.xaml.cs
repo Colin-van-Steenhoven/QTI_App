@@ -49,11 +49,11 @@ namespace QTI_App
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void saveB_Click(object sender, RoutedEventArgs e)
         {
             using var db = new AppDbContext();
 
-            var text = QuestionTextBox.Text;
+            var text = questionTB.Text;
 
             if (answers.Count >= 2 && answers.Any(a => a.IsCorrect))
             {
@@ -65,19 +65,17 @@ namespace QTI_App
                 db.Questions.Add(newQuestion);
                 db.SaveChanges();
 
-                var questionTags = new List<QuestionTag>();
 
                 foreach (var currentQuestionTag in currentQuestionTags)
                 {
                     var tag = db.Tags.First(g => g.Id == currentQuestionTag.Id);
 
-                    var questionTag = new QuestionTag
+                    db.QuestionTags.Add(new QuestionTag
                     {
                         Question = newQuestion,
                         Tag = tag
-                    };
+                    });
 
-                    questionTags.Add(questionTag);
                 }
 
                 foreach (var answer in answers)
@@ -106,7 +104,7 @@ namespace QTI_App
             currentQuestionTags.Remove(tag);
         }
 
-        private void AddTagButton_Click(object sender, RoutedEventArgs e)
+        private void AddTagButton_Click_1(object sender, RoutedEventArgs e)
         {
             var selectedTag = (Tag)tagsComboBox.SelectedItem;
 
