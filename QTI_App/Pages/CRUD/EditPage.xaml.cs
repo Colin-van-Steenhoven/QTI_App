@@ -222,5 +222,9 @@ namespace QTI_App.Pages.CRUD
 
             }
         }
+        private void bBack_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(HomePage));
+        }
     }
 }
